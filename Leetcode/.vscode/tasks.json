@@ -1,0 +1,77 @@
+// {
+//     // See https://go.microsoft.com/fwlink/?LinkId=733558
+//     // for the documentation about the tasks.json format
+//     "version": "2.0.0",
+//     "tasks": [
+//         {
+//             "label": "build",
+//             "type": "shell",
+//             "command": "g++",
+//             "args": [
+//                 "-g",// 生成和调试有关的信息
+//                 "${file}",
+//                 "-o", // 指定输出文件名，不加该参数则默认输出a.exe，Linux下默认a.out
+//                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
+//                 //"${fileDirname}/${fileBasenameNoExtension}.exe",
+//             ],
+//             "group": {
+//                 "kind": "build",
+//                 "isDefault": true // 设为false可做到一个tasks.json配置多个编译指令，需要自己修改本文件，我这里不多提
+//             },
+//             "presentation": {
+//                 // Reveal the output only if unrecognized errors occur.
+//                 "reveal": "always"
+//             },
+//             // Use the standard MS compiler pattern to detect errors, warnings and infos
+//             "problemMatcher":{
+//                 "owner": "$gcc",
+//                 "fileLocation":"absolute",
+//                 "pattern":[
+//                     {
+//                         "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+//                         "file": 1,
+//                         "line": 2,
+//                         "column": 3,
+//                         //"location": 2,
+//                         "message": 5
+//                     }
+//                 ]
+//              }
+//         }
+//     ]
+// }
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build", // 任务名称，与launch.json的preLaunchTask相对应
+            "command": "g++", // 要使用的编译器
+            "args": [
+                "-g",// 生成和调试有关的信息
+                "${file}",
+                "-o", // 指定输出文件名，不加该参数则默认输出a.exe，Linux下默认a.out
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                //"${fileDirname}/${fileBasenameNoExtension}.exe",
+            ], // 编译命令参数
+            "type": "shell", // 可以为shell或process，前者相当于先打开shell再输入命令，后者是直接运行命令
+            "group": {
+                "kind": "build",
+                "isDefault": true // 设为false可做到一个tasks.json配置多个编译指令，需要自己修改本文件，我这里不多提
+            },
+            "problemMatcher":{
+                "owner": "$gcc",
+                "fileLocation":"absolute",
+                "pattern":[
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        //"location": 2,
+                        "message": 5
+                    }
+                ]
+             }
+        }
+    ]
+}
