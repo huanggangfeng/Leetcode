@@ -26,3 +26,35 @@ public:
         return -1;
     }
 };
+
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        if (nums.empty())
+            return -1;
+        int left = 0;
+        int right = nums.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target)
+                return mid;
+            // [left, mid] 有序
+            if (nums[mid] >= nums[0]) {
+                // target 在[left, mid) 之间
+                if (target < nums[mid] && target >= nums[0]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else { // [mid ,right] 是有序的
+                if (target > nums[mid] && target <= nums[nums.size() - 1]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+};

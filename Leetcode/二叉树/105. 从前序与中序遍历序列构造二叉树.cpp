@@ -20,6 +20,7 @@ public:
         if (pos >= preorder.size())
             return NULL;
         int i = left;
+        // 找到根节点在中序中的位置，
         for (; i <= right; i++) {
             if (inorder[i] == preorder[pos])
                 break;
@@ -27,8 +28,10 @@ public:
 
         TreeNode *node = new TreeNode(preorder[pos]);        
 
+        // 递归构造整个左子树
         if (i-1 >= left)
             node->left = buildBinaryTree(preorder, ++pos, inorder, left, i-1);
+        // 递归构造整个右子树
         if (i+1 <= right)
             node->right = buildBinaryTree(preorder, ++pos, inorder, i+1, right);
         return node;

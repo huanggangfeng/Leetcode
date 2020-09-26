@@ -24,8 +24,10 @@ public:
         while (p <= right && postorder[pos] != inorder[p])
             p++;
         TreeNode* node = new TreeNode(postorder[pos]);
+        // 递归构造整个右子树
         if (p+1 <= right)
             node->right = buildTree(postorder, --pos, inorder, p+1, right);
+        // 递归构造整个左子树
         if (left <= p-1)
             node->left = buildTree(postorder, --pos, inorder, left, p-1);
         return node;

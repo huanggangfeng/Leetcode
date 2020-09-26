@@ -76,3 +76,37 @@ public:
         return nums[left];
     }
 };
+
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        if (nums.empty())
+            return -1;
+        int left = 0;
+        int right = nums.size() - 1;
+        // 数组有序，可以直接返回nums[0]
+        if (nums[right] > nums[left])
+            return nums[left];
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            // [left, mid] 有序, 可以全部丢掉
+            if (nums[mid] > nums[0]) {
+                left = mid + 1;
+            } else if (nums[mid] < nums[0]) {
+                // [left, mid] 是目标区间， (mid, right]丢掉
+                right = mid;
+            } else {
+                // mid 和 nums[left] 相等，
+                if (nums[left] <= nums[right]) {
+                    // 目标在[mid, right) 中间
+                    right--;
+                } else { // 目标在(left, mid] 中间
+                    left++;
+                }
+            }
+        }     
+        return nums[left];
+    }
+};
