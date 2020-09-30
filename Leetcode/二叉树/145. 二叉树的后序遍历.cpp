@@ -37,6 +37,7 @@ public:
                 res.push_back(s.top()->val);
                 s.pop();
             } else {
+                // 这道题的难点在于仅利用栈去判断该节点是否为父结点，创新性思路是每次在栈中压入父节点后压入nullptr，之后再依次压入右子节点和左子节点。
                 s.push(nullptr);
                 if (node->right)
                     s.push(node->right);
