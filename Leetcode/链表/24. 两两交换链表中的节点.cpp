@@ -31,3 +31,29 @@ public:
         return tail;
     }
 };
+
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == NULL || head->next == NULL)
+            return head;
+        ListNode *dummyHead = new ListNode;
+        ListNode *tail = dummyHead;
+        while (head != NULL && head->next != NULL) {
+            ListNode *tmp = head->next->next;
+            tail->next = head->next;
+            tail->next->next = head;
+            tail = head;
+            head = tmp;
+        }
+
+        if (head != NULL) {
+            tail->next = head;
+            tail = tail->next;
+        }
+
+        tail->next = NULL;
+        return dummyHead->next;
+    }
+};
