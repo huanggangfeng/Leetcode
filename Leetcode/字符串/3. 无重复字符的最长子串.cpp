@@ -1,13 +1,26 @@
-#include <iostream>
-#include <string>
-#include <unordered_map>
+// https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
 
-//�������ڣ�
-// ʹ��һ��hash table�������ϴ�ĳ���ַ����ֵ�λ�ã�
-// ������ַ��Ѿ����֣���λ����ǰһ��λ�ý�β���Ӵ�֮�У����last_pos������
-// ������ֵĸ��磬��ֻ�迼��
+int lengthOfLongestSubstring(string s) {
+    int lengthOfLongestSubstring(string s) {
+        if (s.empty())
+            return 0;
+        map<char, int> character_pos;
+        int ret = 1;
+        int last_pos = -1;
+        for (int i = 0; i < s.size(); i++) {
+            auto it = character_pos.find(s[i]);
+            if (it != character_pos.end()) {
+                if (it->second > last_pos)
+                    last_pos = it->second ;
+            }
+            character_pos[s[i]] = i;
+            ret = ret > i - last_pos ? ret : i - last_pos;
+        }
+        return ret;
+    }
+}
 
-using namespace std;
+
 int lengthOfLongestSubstring(string s)
 {
 	if (s.empty())
@@ -29,7 +42,6 @@ int lengthOfLongestSubstring(string s)
 	return ret;
 }
 
-
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -40,7 +52,6 @@ public:
         int left = 0;
         for (int i = 0; i < s.size(); i++) {
             c_cnt[s[i]] += 1;
-			// 左指针向右移动，直到子串中s[i]的出现次数恢复成成1.
             while (c_cnt[s[i]] > 1) {
                 c_cnt[s[left]] -= 1;
                 left++;
@@ -53,10 +64,3 @@ public:
         return ret;
     }
 };
-
-int main()
-{
-	string s(" ");
-	std::cout << lengthOfLongestSubstring(s) << "\n";
-	return 0;
-}
