@@ -44,3 +44,45 @@ public:
         }
     }
 };
+
+
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ret;
+        if (nums.empty())
+            return ret;
+        dfs(ret, nums, 0);
+        return ret;
+    }
+
+    void swap(int &a, int &b) {
+        int tmp = b;
+        b = a;
+        a= tmp;
+    }
+
+    void dfs(vector<vector<int>> &ret, vector<int>& nums, int level) {
+        if (level == nums.size()) {
+            ret.emplace_back(nums);
+            return;
+        }
+        for (int i = level; i < nums.size(); i++) {
+                if (isReapted(nums, level, i))
+                    continue;
+
+                swap(nums[level], nums[i]);
+                dfs(ret, nums, level + 1);
+                swap(nums[level], nums[i]);
+        }
+    }
+
+    // 在当前数字和前面已经处理过的某个数字一样，所以是重复处理，可以剪枝
+    bool isReapted(vector<int>& nums, int level, int i) {
+        for (int j = level; j < i ; j++) {
+            if (nums[j] == nums[i])
+                return true;
+        }
+        return false;
+    }
+};

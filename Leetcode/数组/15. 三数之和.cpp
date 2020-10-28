@@ -54,3 +54,45 @@ public:
         return ret;
     }
 };
+
+
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ret;
+        if (nums.size() < 3)
+            return ret;
+        sort(nums.begin(), nums.end());
+        int n = nums.size() - 2;
+        for (int i = 0; i < n; i++) {
+            // 在计算第一个数字为nums[i -1]的时候，num[i]..[end]所有的两两数据都统计过了，比如[i + 1, n)都统计过了，所以不用再次计算
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            if (nums[i] > 0)
+                return ret;
+
+            int left = i + 1;
+            int right = nums.size() - 1;
+            int target = 0 - nums[i];
+            while (left < right) {
+                int sum2 = nums[left] + nums[right];
+                if (sum2 == target) {
+                    ret.emplace_back(vector<int>{nums[i], nums[left], nums[right]});
+                    ++left;
+                    --right;
+                    while (left < right && nums[left] == nums[left-1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right + 1])
+                        right--;
+                } else if (sum2 > target) {
+                        right--;
+                } else {
+                        left++;
+                }
+            }
+        }
+        return ret;
+    }
+};
