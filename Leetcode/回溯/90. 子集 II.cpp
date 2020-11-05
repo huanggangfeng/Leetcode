@@ -32,3 +32,30 @@ public:
         }
     }
 };
+
+
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> ret;
+        if (nums.empty())
+            return ret;
+        sort(nums.begin(), nums.end());
+        vector<int> path;
+        dfs(ret, nums, path, 0);
+
+         return ret;
+    }
+
+    void dfs(vector<vector<int>> &ret, vector<int>& nums, vector<int> path, int start) {
+        ret.emplace_back(path);
+        for (int i = start; i < nums.size(); i++) {
+            // 本层这个第二次出现了，可以忽略了
+            if (i > start && nums[i] == nums[i - 1])
+                continue;
+            path.emplace_back(nums[i]);
+            dfs(ret, nums, path, i + 1);
+            path.pop_back();
+        }
+    }
+};
