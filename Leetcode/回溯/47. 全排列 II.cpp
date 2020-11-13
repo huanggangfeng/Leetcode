@@ -86,3 +86,45 @@ public:
         return false;
     }
 };
+
+
+
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<int> path;
+        vector<vector<int>> ret;
+        vector<bool> used(nums.size(), false);
+        dfs(ret, nums, path, used);
+        return ret;
+    }
+
+    void dfs(vector<vector<int>> &ret, vector<int> &nums, vector<int> &path, vector<bool> &used) {
+        if (path.size() == nums.size()) {
+            ret.push_back(path);
+            return;
+        }
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (used[i])
+                continue;
+            // 本层已经用过该值，所以可以跳过
+            if (isRepeated(nums, used, i))
+                continue;
+            used[i] = true;
+            path.push_back(nums[i]);
+            dfs(ret, nums, path, used);
+            used[i] = false;
+            path.pop_back();
+        }
+    }
+
+    bool isRepeated(vector<int> &nums, vector<bool> &used, int index) {
+        for (int i = 0; i < index; i++) {
+            if (nums[i] == nums[index] && used[i] == false)
+                return true;
+        }
+        return false;
+    }
+};

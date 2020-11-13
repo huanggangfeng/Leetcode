@@ -1,23 +1,46 @@
+// https://leetcode-cn.com/problems/subsets/submissions/
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> ret;
-        for (int i = 0; i < nums.size(); i++) {
+        for (int i = 0 ; i <= nums.size(); i++) {
             vector<int> path;
-            backtrace(0, ret, nums, path, i);
+            dfs(ret, nums, path, i, 0);
         }
         return ret;
     }
 
-    void backtrace(int first, vector<vector<int>> &ret, vector<int>& nums, vector<int> &path, const int target) {
-        if (path.size() == target) {
-            ret.emplace_back(path);
+    void dfs(vector<vector<int>> &ret, vector<int>& nums, vector<int> &path, const int len, int start) {
+        if (path.size() == len) {
+            ret.push_back(path);
+            return;
         }
 
-        for (int i = first; i< nums.size(); i++) {
-                path.push_back(nums[i]);
-                backtrace(i + 1, ret, nums, path, target);
-                path.pop_back();
+        for (int i = start; i < nums.size(); i++) {
+            path.push_back(nums[i]);
+            dfs(ret, nums, path, len, i + 1);
+            path.pop_back();
+        }
+    }
+};
+
+// 优化： 在扫描深度为n的时候，其实也已经扫描过，【0， n-1】
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ret;
+        vector<int> path;
+        dfs(ret, nums, path, 0);
+        return ret;
+    }
+
+    void dfs(vector<vector<int>> &ret, vector<int>& nums, vector<int> &path, int start) {
+        ret.push_back(path);
+
+        for (int i = start; i < nums.size(); i++) {
+            path.push_back(nums[i]);
+            dfs(ret, nums, path, i + 1);
+            path.pop_back();
         }
     }
 };
