@@ -7,6 +7,19 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) 
+            return head;
+        ListNode *tmp = head->next;
+        head->next = swapPairs(head->next->next);
+        tmp->next = head;
+        return tmp;
+    }
+};
+
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
@@ -57,3 +70,5 @@ public:
         return dummyHead->next;
     }
 };
+
+
