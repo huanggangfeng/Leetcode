@@ -5,54 +5,28 @@ public:
         if (nums.empty())
             return -1;
         int left = 0;
-        int right = nums.size() - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target)
-                return mid;
-            //左边是有序的
-            if (nums[left] <= nums[mid]) {
-                if (target >= nums[left] && target <= nums[mid])
-                    right = mid - 1;
-                else
-                    left = mid  + 1;
-            } else { //
-                if (target >= nums[mid] && target <= nums[right])
-                    left = mid + 1;
-                else
-                    right = mid - 1;
-            }
-        }
-        return -1;
-    }
-};
-
-
-class Solution {
-public:
-    int search(vector<int>& nums, int target) {
-        if (nums.empty())
-            return -1;
-        int left = 0;
-        int right = nums.size() - 1;
-        while (left <= right) {
+        int right = nums.size();
+        while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target)
                 return mid;
             // [left, mid] 有序
-            if (nums[mid] >= nums[0]) {
+            if (nums[mid] > nums[left]) {
                 // target 在[left, mid) 之间
-                if (target < nums[mid] && target >= nums[0]) {
-                    right = mid - 1;
+                if (target < nums[mid] && target >= nums[left]) {
+                    right = mid;
                 } else {
                     left = mid + 1;
                 }
-            } else { // [mid ,right] 是有序的
-                if (target > nums[mid] && target <= nums[nums.size() - 1]) {
+            } else if (nums[mid] < nums[left]){
+                // (mid, right) 有序
+                if (target > nums[mid] && target <= nums[right - 1]) {
                     left = mid + 1;
                 } else {
-                    right = mid - 1;
+                    right = mid;
                 }
+            } else {
+                left++;
             }
         }
         return -1;

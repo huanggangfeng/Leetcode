@@ -32,6 +32,7 @@ public:
         int ret = 0;
         vector<int> left(A.size(), 1);
         vector<int> right(A.size(), 1);
+        // left[i] 表示左边连续递增子序列长度
         for (int i = 1; i < A.size(); i++) {
             if (A[i] > A[i - 1])
                 left[i] = left[i - 1] + 1;
@@ -39,6 +40,7 @@ public:
 
         int i = A.size() - 2;
         for (; i >= 0; i--) {
+            // right[i] 表示以i为结尾从右向左递增子序列长度
             if (A[i] > A[i + 1])
                 right[i] = right[i + 1] + 1;
         }
