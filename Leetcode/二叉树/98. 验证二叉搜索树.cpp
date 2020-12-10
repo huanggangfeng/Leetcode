@@ -63,3 +63,36 @@ public:
         return true;
     }
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if (root == nullptr)
+            return true;
+
+        return helper(root, LONG_MIN, LONG_MAX);
+    }
+    
+    bool helper(TreeNode* root, long min, long max) {
+        if (root == nullptr)
+            return true;
+        // cout << "Root:" << root->val << "\tMin:" << min << "\tMax:" << max << "\n";
+        bool left = helper(root->left, min, root->val);
+        if (!left)
+            return false;
+        bool right = helper(root->right, root->val, max);
+        if (!right)
+            return false;
+        return (root->val > min && root->val < max);
+    }
+};
